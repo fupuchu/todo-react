@@ -2,26 +2,40 @@ class List extends React.Component {
   constructor(){
     super()
     this.changeHandler = this.changeHandler.bind( this );
+    this.clickHandler = this.clickHandler.bind( this );
   }
 
   state = {
     list : [],
-    word : ""
+    word : "",
   }
 
   changeHandler(event){
     this.setState({word:event.target.value});
-    console.log("change", event.target.value);
+  }
+
+  clickHandler(){
+    let task = this.state.word;
+    let storeIntoList = this.state.list;
+
+    storeIntoList.push(task)
+
+    console.log(this.state.list);
+
+    this.setState({list: this.state.list})
+  
+    
   }
 
   render() {
-      // render the list with a map() here
-
-      console.log("rendering");
+      let tasks = this.state.list.map((item, index) => {
+        return <li key={index}>{item}</li>;
+      });
       return (
         <div className="list">
           <input onChange={this.changeHandler} value={this.state.word}/>
-          <button>add item</button>
+          <button onClick={this.clickHandler}>add item</button>
+          {tasks}
         </div>
       );
   }
